@@ -1,0 +1,4 @@
+# Linux firmware project: keep LF everywhere (scripts run on the NAS).
+* text=auto eol=lf
+*.png binary
+*.jpg binary

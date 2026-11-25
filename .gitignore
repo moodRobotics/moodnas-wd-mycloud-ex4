@@ -1,0 +1,20 @@
+# Local work: unpacked vendor firmware, extracted binaries, build output.
+# Never commit WD firmware or binaries: they are not ours to redistribute.
+/work/
+/data/
+/dist/
+*.bin
+*.cfs
+*.squashfs
+uImage
+uRamdisk
+
+ui/node_modules/
+ui/dist/
+
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,30 @@
+#!/bin/sh
+# Start/stop the MoodNAS daemon.
+
+DAEMON=/usr/bin/moodd
+PIDFILE=/var/run/moodd.pid
+# The MCU driver stays off until the protocol is confirmed on hardware:
+# add "-mcu /dev/ttyS1" to MOODD_ARGS in /etc/default/moodd to try it.
+MOODD_ARGS="-data /var/lib/moodnas -ui /usr/share/moodnas/ui"
+[ -r /etc/default/moodd ] && . /etc/default/moodd
+
+case "$1" in
+start)
+	printf "Starting moodd: "
+	start-stop-daemon -S -q -b -m -p "$PIDFILE" -x "$DAEMON" -- $MOODD_ARGS && echo OK || echo FAIL
+	;;
+stop)
+	printf "Stopping moodd: "
+	start-stop-daemon -K -q -p "$PIDFILE" && echo OK || echo FAIL
+	rm -f "$PIDFILE"
+	;;
+restart)
+	"$0" stop
+	sleep 1
+	"$0" start
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+	;;
+esac

@@ -1,0 +1,14 @@
+# Try MoodNAS without touching your NAS: `docker compose up --build`
+# then open http://localhost:8080 and sign in as demo / moodnas-demo
+# (public demo account: simulator only, never on real hardware).
+services:
+  moodnas:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - moodnas-data:/data
+volumes:
+  moodnas-data:

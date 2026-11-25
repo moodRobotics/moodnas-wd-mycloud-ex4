@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_MOODNAS_PATH/package/moodd/Config.in"

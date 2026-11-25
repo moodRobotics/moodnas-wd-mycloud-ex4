@@ -1,0 +1,183 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device tree for the Western Digital My Cloud EX4 (codename "Lightning",
+ * LT4A) for mainline Linux.
+ *
+ * STATUS: DRAFT, NOT YET BOOTED. Values come from WD's GPL kernel
+ * (mvBoardEnvSpec.{c,h}, board "RD-88F6282-A" as customised by WD) and from
+ * reverse engineering of the vendor userspace (docs/hardware/). Items marked
+ * TODO need the Stage 0 report (tools/stage0/inventory.sh) from a real unit.
+ *
+ * Hardware summary:
+ *   SoC   Marvell 88F6282 (Kirkwood, Feroceon ARMv5TE)
+ *   RAM   512 MiB DDR3 (TODO confirm)
+ *   NAND  on-chip controller; partition layout from U-Boot mtdparts (TODO)
+ *   SATA  2 ports on-chip (sata_mv) + PCIe Marvell 88SE91xx (ahci) for bays 3-4
+ *   USB   on-chip EHCI + Etron EJ168 xHCI on PCIe
+ *   NET   2x GbE RGMII, PHYs at SMI addresses 0 and 1
+ *   UART0 console 115200 8N1; UART1 front-panel MCU (19200 8N1, see
+ *         docs/hardware/mcu-protocol.md). Fan, OLED, buttons and RTC live
+ *         behind the MCU, so they are driven from userspace by moodd.
+ *   I2C0  0x72: bay power (reg 1 bits 7-4) / presence (reg 0 bits 3-0, active
+ *         low) — custom device, accessed from userspace via i2c-dev.
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/leds/common.h>
+#include "kirkwood.dtsi"
+#include "kirkwood-6282.dtsi"
+
+/ {
+	model = "Western Digital My Cloud EX4";
+	compatible = "wd,mycloud-ex4", "marvell,kirkwood-88f6282", "marvell,kirkwood";
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x00000000 0x20000000>; /* TODO: confirm 512 MiB */
+	};
+
+	chosen {
+		bootargs = "console=ttyS0,115200n8";
+		stdout-path = &uart0;
+	};
+
+	ocp@f1000000 {
+		pinctrl: pin-controller@10000 {
+			/* MPP values from RD_88F6282A_MPP*: TODO translate into pin groups */
+		};
+
+		serial@12000 {
+			status = "okay";
+		};
+
+		/* front-panel MCU */
+		serial@12100 {
+			status = "okay";
+		};
+
+		i2c@11000 {
+			status = "okay";
+			clock-frequency = <100000>;
+		};
+
+		sata@80000 {
+			status = "okay";
+			nr-ports = <2>;
+		};
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+
+		/* GPIO 28/29: power LED colours. Which is blue and which is red is TODO. */
+		led-power-a {
+			label = "ex4:power:a";
+			gpios = <&gpio0 28 GPIO_ACTIVE_HIGH>;
+			default-state = "on";
+		};
+		led-power-b {
+			label = "ex4:power:b";
+			gpios = <&gpio0 29 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		/* GPIO 45-48: drive status LEDs, bays 1-4 (polarity TODO) */
+		led-bay1 {
+			label = "ex4:bay1";
+			gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
+		};
+		led-bay2 {
+			label = "ex4:bay2";
+			gpios = <&gpio1 14 GPIO_ACTIVE_HIGH>;
+		};
+		led-bay3 {
+			label = "ex4:bay3";
+			gpios = <&gpio1 15 GPIO_ACTIVE_HIGH>;
+		};
+		led-bay4 {
+			label = "ex4:bay4";
+			gpios = <&gpio1 16 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	regulator-usb-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb-vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&gpio1 5 GPIO_ACTIVE_HIGH>; /* GPIO 37 */
+		enable-active-high;
+		regulator-always-on;
+	};
+
+	regulator-hdd-power {
+		compatible = "regulator-fixed";
+		regulator-name = "hdd-power";
+		regulator-min-microvolt = <12000000>;
+		regulator-max-microvolt = <12000000>;
+		gpio = <&gpio1 3 GPIO_ACTIVE_HIGH>; /* GPIO 35 */
+		enable-active-high;
+		regulator-always-on;
+	};
+};
+
+&nand {
+	status = "okay";
+	chip-delay = <40>;
+
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		/*
+		 * TODO: copy the real layout from /proc/mtd (Stage 0). Known roles:
+		 * mtd0 u-boot, mtd1 uImage, mtd2 uRamdisk, mtd3 image.cfs,
+		 * mtd4 rescue firmware + MAC/serial, mtd5 config (UBI).
+		 * Until confirmed every partition must stay read-only.
+		 */
+	};
+};
+
+&mdio {
+	status = "okay";
+
+	ethphy0: ethernet-phy@0 {
+		reg = <0>;
+	};
+
+	ethphy1: ethernet-phy@1 {
+		reg = <1>;
+	};
+};
+
+&eth0 {
+	status = "okay";
+};
+
+&eth0port {
+	phy-handle = <&ethphy0>;
+	phy-connection-type = "rgmii-id";
+};
+
+&eth1 {
+	status = "okay";
+};
+
+&eth1port {
+	phy-handle = <&ethphy1>;
+	phy-connection-type = "rgmii-id";
+};
+
+&pciec {
+	status = "okay";
+};
+
+&pcie0 {
+	status = "okay";
+};
+
+&pcie1 {
+	status = "okay";
+};

@@ -1,0 +1,3 @@
+# Extra arguments for moodd. Uncomment to try the experimental MCU driver
+# (fan, board temperature) once you have confirmed the protocol on your unit.
+#MOODD_ARGS="$MOODD_ARGS -mcu /dev/ttyS1"
