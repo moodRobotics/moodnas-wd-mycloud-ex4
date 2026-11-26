@@ -46,7 +46,13 @@ start)
 	echo "The browser will warn about the self-signed certificate; its SHA-256 is in the log."
 	# moodd prints a one-time setup code only while no administrator exists
 	CODE=$(sed -n 's/.*setupCode=\([A-Z0-9-]*\).*/\1/p' "$LOG" | tail -1)
-	[ -n "$CODE" ] && echo "First-time setup code: $CODE"
+	if [ -n "$CODE" ]; then
+		echo
+		echo "  =============================================="
+		echo "   First-time setup code:  $CODE"
+		echo "   (not shown on the NAS display in sidecar mode)"
+		echo "  =============================================="
+	fi
 	;;
 stop)
 	if running; then
@@ -66,6 +72,8 @@ status)
 	;;
 log)
 	tail -40 "$LOG"
+	CODE=$(sed -n "s/.*setupCode=\([A-Z0-9-]*\).*/\1/p" "$LOG" | tail -1)
+	[ -n "$CODE" ] && echo && echo "Setup code: $CODE"
 	;;
 *)
 	echo "usage: sh $0 {start|stop|status|log}"

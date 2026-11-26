@@ -9,7 +9,6 @@
   "common.saved": "已保存",
   "common.edit": "编辑",
   "common.delete": "删除",
-
   "nav.label": "主菜单",
   "nav.menu": "菜单",
   "nav.dashboard": "概览",
@@ -20,14 +19,11 @@
   "nav.users": "用户",
   "nav.system": "系统",
   "nav.account": "我的账户",
-
   "role.admin": "管理员",
   "role.user": "用户",
-
   "time.dh": "{d} 天 {h} 小时",
   "time.hm": "{h} 小时 {m} 分钟",
   "time.m": "{m} 分钟",
-
   "sim.banner": "模拟器模式：不会操作任何真实硬件",
   "sim.title": "模拟场景",
   "sim.help": "看看出问题时 MoodNAS 会怎么做。留意它的眼睛。",
@@ -37,12 +33,12 @@
   "sim.disk-failing": "硬盘即将故障",
   "sim.degraded": "RAID 降级",
   "sim.ransomware": "勒索软件攻击",
-
   "setup.welcome": "你好！我是你的新 MoodNAS",
   "setup.intro": "你的 WD My Cloud EX4 现在运行的是开放、现代、安全的软件。我们花一分钟把它设置好吧。",
   "setup.start": "开始",
   "setup.codeTitle": "证明你就在 NAS 旁边",
   "setup.codeHelp": "请查看 NAS 的前面板显示屏（或系统日志），上面会显示一个 8 位设置码。这样可以防止你网络中的其他人抢先占用它。",
+  "setup.codeHelpLog": "8 位设置码位于 MoodNAS 日志中，因为前面板显示屏仍由 WD 固件控制。请通过 SSH 在 NAS 的 moodnas-sidecar 文件夹中运行以下命令（启动命令也会显示该设置码）：",
   "setup.code": "设置码",
   "setup.adminTitle": "创建管理员",
   "setup.hostname": "NAS 名称",
@@ -52,15 +48,12 @@
   "setup.mismatch": "两次输入的密码不一致",
   "setup.finish": "完成",
   "setup.footer": "没有默认密码。无需云账户。",
-
   "login.user": "用户",
   "login.password": "密码",
   "login.totp": "身份验证器应用中的 6 位验证码",
   "login.submit": "登录",
-
   "user.nameRules": "小写字母、数字、- 和 _，必须以字母开头。",
   "user.passwordRules": "至少 10 个字符。一句简短的话既好记又难猜。",
-
   "mood.state.calm": "平静",
   "mood.state.focused": "专注",
   "mood.state.sleepy": "休息中",
@@ -78,15 +71,12 @@
   "mood.arrayDegraded": "RAID {array} 已降级：有一块硬盘掉线了。你的数据还在，但已经没有安全冗余。",
   "mood.arrayRebuilding": "正在重建 RAID {array}：{progress}%。",
   "mood.ransomware": "“{share}”上出现疑似勒索软件的活动。我已将其冻结为只读，以保护你的文件。",
-
   "fan.reason.normal": "风扇随温度调节。",
   "fan.reason.rising": "温度正在上升：我提前调高了风扇转速。",
   "fan.reason.quiet": "静音时段：温度安全时保持低转速。",
   "fan.reason.critical": "温度过高：风扇强制 100% 运转。",
   "fan.reason.manual": "风扇处于手动模式。",
-
   "panel.caption": "NAS 前面板显示屏实时预览",
-
   "dash.moodLabel": "我的心情",
   "dash.cpuTemp": "CPU 温度",
   "dash.predicted": "预计 3 分钟后 {c} °C",
@@ -103,17 +93,14 @@
   "dash.uptime": "已运行",
   "dash.network": "网络",
   "dash.kernel": "内核",
-
   "fill.learning": "正在了解你存储数据的速度…",
   "fill.stable": "使用量稳定：没有存满的风险。",
   "fill.days": "按每天 {rate} 计算，大约 {days} 天后存满。",
-
   "array.clean": "健康",
   "array.degraded": "已降级",
   "array.resyncing": "同步中",
   "array.recovering": "重建中",
   "array.inactive": "未激活",
-
   "storage.bay": "盘位 {n}",
   "storage.sleeping": "休眠中",
   "storage.passed": "正常",
@@ -125,7 +112,6 @@
   "storage.members": "硬盘",
   "storage.capacity": "已用 / 总计",
   "storage.compat": "原版 WD 固件创建的存储卷可直接识别：无需格式化，无需迁移。",
-
   "smart.temp": "温度",
   "smart.hours": "使用时长",
   "smart.years": "年通电时间",
@@ -133,7 +119,6 @@
   "smart.pending": "待处理扇区",
   "smart.uncorr": "无法读取的扇区",
   "smart.crc": "线缆错误",
-
   "risk.title": "AI 故障风险",
   "risk.low": "低",
   "risk.medium": "中",
@@ -142,7 +127,6 @@
   "risk.because": "主要迹象：",
   "risk.advice.medium": "不着急，但请确保你有一份最近的备份。",
   "risk.advice.high": "请立即备份，并计划更换这块硬盘。",
-
   "factor.reallocated": "重新分配的扇区",
   "factor.reported_uncorrectable": "已报告的读取错误",
   "factor.command_timeout": "命令超时",
@@ -151,7 +135,6 @@
   "factor.age_years": "使用年限",
   "factor.temp_over_45": "温度过高",
   "factor.smart_failed": "SMART 自检未通过",
-
   "shares.help": "可以从电脑（SMB）和手机上打开的文件夹。",
   "shares.readOnly": "只读",
   "shares.sentinel": "受保护",
@@ -164,14 +147,12 @@
   "shares.name": "名称",
   "shares.create": "创建",
   "shares.confirmDelete": "要移除共享文件夹“{name}”吗？文件会保留在硬盘上。",
-
   "users.name": "名称",
   "users.role": "角色",
   "users.created": "创建时间",
   "users.new": "新建用户",
   "users.create": "创建用户",
   "users.confirmDelete": "要删除用户“{name}”吗？",
-
   "ai.intro": "旧硬件，新智能。部分功能完全在 NAS 上运行；其他功能使用你选择的 AI 模型。除非你主动开启，否则不会向任何地方发送数据，每次请求都会在下方列出。",
   "ai.assistant": "Mood，你的助手",
   "ai.assistantSub": "用你自己的话询问关于 NAS 的问题",
@@ -216,7 +197,6 @@
   "ai.ollamaHelp": "你网络中运行 Ollama 的一台电脑。数据不会离开你家。",
   "ai.localFeatures": "在 NAS 上（私密）",
   "ai.remoteFeatures": "使用 AI 服务商",
-
   "feature.diskrisk": "硬盘故障预测",
   "feature.diskrisk.help": "根据 SMART 数据估算每块硬盘的故障风险。",
   "feature.sentinel": "勒索软件哨兵",
@@ -229,7 +209,6 @@
   "feature.assistant.help": "用自然语言提问和下达指令。任何更改都需要你确认。",
   "feature.explain": "告警解读",
   "feature.explain.help": "把技术告警转换成通俗易懂的说明（即将推出）。",
-
   "security.incident": "“{share}”上出现可疑活动",
   "security.incidentDetail": "{n} 次可疑操作（评分 {score}）",
   "security.frozen": "该共享文件夹已被冻结为只读，无法写入任何新内容。",
@@ -240,7 +219,6 @@
   "security.actor": "操作者",
   "security.action": "操作",
   "security.details": "详情",
-
   "system.general": "常规",
   "system.defaultLang": "默认语言",
   "system.defaultLangHelp": "用于新访客。每个人都可以自行选择语言。",
@@ -253,7 +231,6 @@
   "system.safety": "安全第一：无论如何设置，只要 CPU 达到 90 °C 或任一硬盘达到 55 °C，风扇都会以 100% 运转。",
   "system.about": "关于",
   "system.aboutText": "MoodNAS 是 Mood Robotics 推出的开源固件，让 WD My Cloud EX4 焕发第二次生命：一个内置人工智能的现代、安全系统。",
-
   "account.password": "修改密码",
   "account.current": "当前密码",
   "account.new": "新密码",
@@ -267,7 +244,6 @@
   "account.totpStep2": "输入应用中显示的 6 位验证码。",
   "account.totpLink": "在身份验证器应用中打开",
   "account.totpConfirm": "确认",
-
   "error.network": "无法连接到 NAS。请检查你的网络连接。",
   "error.unknown": "出了点问题。",
   "internal": "内部错误，请重试。",

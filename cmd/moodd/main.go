@@ -110,6 +110,8 @@ func run(log *slog.Logger, dataDir, uiDir, listen, httpAddr string, insecure, si
 		Store: store, Sessions: auth.NewSessions(), Limiter: auth.NewLimiter(), Audit: auditLog,
 		Monitor: mon, Assistant: assistant.New(), Platform: p, Sim: simulator, Log: log,
 		UIDir: uiDir, Version: version, SecureCookies: !insecure,
+		// the code is on the (virtual) panel in the simulator and with the MCU driver
+		PanelSetupCode: simulate || mcuDevice != "",
 	}
 	if code := srv.EnsureSetupCode(); code != "" {
 		log.Warn("NAS not set up yet: open the web interface and enter this setup code", "setupCode", code)

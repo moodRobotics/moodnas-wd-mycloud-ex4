@@ -46,6 +46,9 @@ type Server struct {
 	UIDir         string
 	Version       string
 	SecureCookies bool
+	// PanelSetupCode: the front display shows the setup code (false when WD's
+	// firmware owns the display, e.g. sidecar mode): the code is then only in the log.
+	PanelSetupCode bool
 
 	setupMu   sync.Mutex
 	setupCode string

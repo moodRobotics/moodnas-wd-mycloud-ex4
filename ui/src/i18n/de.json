@@ -9,7 +9,6 @@
   "common.saved": "Gespeichert",
   "common.edit": "Bearbeiten",
   "common.delete": "Löschen",
-
   "nav.label": "Hauptmenü",
   "nav.menu": "Menü",
   "nav.dashboard": "Übersicht",
@@ -20,14 +19,11 @@
   "nav.users": "Benutzer",
   "nav.system": "System",
   "nav.account": "Mein Konto",
-
   "role.admin": "Administrator",
   "role.user": "Benutzer",
-
   "time.dh": "{d} T {h} h",
   "time.hm": "{h} h {m} min",
   "time.m": "{m} min",
-
   "sim.banner": "Simulatormodus: Es wird keine echte Hardware angesprochen",
   "sim.title": "Simulator-Szenarien",
   "sim.help": "Probier aus, was MoodNAS tut, wenn etwas schiefgeht. Achte auf die Augen.",
@@ -37,12 +33,12 @@
   "sim.disk-failing": "Festplatte fällt aus",
   "sim.degraded": "RAID beeinträchtigt",
   "sim.ransomware": "Ransomware-Angriff",
-
   "setup.welcome": "Hallo! Ich bin dein neues MoodNAS",
   "setup.intro": "Dein WD My Cloud EX4 läuft jetzt mit offener, moderner und sicherer Software. Lass es uns in einer Minute einrichten.",
   "setup.start": "Los geht’s",
   "setup.codeTitle": "Beweise, dass du neben dem NAS stehst",
   "setup.codeHelp": "Schau auf das Frontdisplay des NAS (oder ins Systemprotokoll). Dort steht ein 8-stelliger Einrichtungscode. So kann niemand sonst in deinem Netzwerk das Gerät vor dir übernehmen.",
+  "setup.codeHelpLog": "Der 8-stellige Einrichtungscode steht im MoodNAS-Protokoll, weil das Frontdisplay weiterhin von der WD-Firmware gesteuert wird. Führe per SSH auf dem NAS im Ordner moodnas-sidecar Folgendes aus (der Startbefehl zeigt ihn ebenfalls an):",
   "setup.code": "Einrichtungscode",
   "setup.adminTitle": "Administrator anlegen",
   "setup.hostname": "Name des NAS",
@@ -52,15 +48,12 @@
   "setup.mismatch": "Die Passwörter stimmen nicht überein",
   "setup.finish": "Fertig",
   "setup.footer": "Keine Standardpasswörter. Kein Cloud-Konto nötig.",
-
   "login.user": "Benutzer",
   "login.password": "Passwort",
   "login.totp": "6-stelliger Code aus deiner Authenticator-App",
   "login.submit": "Anmelden",
-
   "user.nameRules": "Kleinbuchstaben, Ziffern, - und _. Muss mit einem Buchstaben beginnen.",
   "user.passwordRules": "Mindestens 10 Zeichen. Ein kurzer Satz ist leicht zu merken und schwer zu erraten.",
-
   "mood.state.calm": "Entspannt",
   "mood.state.focused": "Konzentriert",
   "mood.state.sleepy": "Ruhend",
@@ -78,15 +71,12 @@
   "mood.arrayDegraded": "RAID {array} ist beeinträchtigt: Eine Festplatte ist ausgefallen. Deine Daten sind noch da, aber ohne Sicherheitsreserve.",
   "mood.arrayRebuilding": "RAID {array} wird wiederhergestellt: {progress} %.",
   "mood.ransomware": "Ransomware-ähnliche Aktivität auf „{share}“. Ich habe die Freigabe schreibgeschützt eingefroren, um deine Dateien zu schützen.",
-
   "fan.reason.normal": "Der Lüfter folgt der Temperatur.",
   "fan.reason.rising": "Die Temperatur steigt: Ich habe den Lüfter hochgedreht, bevor es heiß wird.",
   "fan.reason.quiet": "Ruhezeit: Lüfter bleibt leise, solange die Temperaturen sicher sind.",
   "fan.reason.critical": "Kritische Temperatur: Lüfter auf 100 % gezwungen.",
   "fan.reason.manual": "Lüfter im manuellen Modus.",
-
   "panel.caption": "Live-Vorschau des NAS-Frontdisplays",
-
   "dash.moodLabel": "Wie es mir geht",
   "dash.cpuTemp": "CPU-Temperatur",
   "dash.predicted": "{c} °C erwartet in 3 min",
@@ -103,17 +93,14 @@
   "dash.uptime": "Läuft seit",
   "dash.network": "Netzwerk",
   "dash.kernel": "Kernel",
-
   "fill.learning": "Ich lerne, wie schnell du Daten speicherst…",
   "fill.stable": "Die Belegung ist stabil: Keine Gefahr, dass es voll wird.",
   "fill.days": "Voll in etwa {days} Tagen bei {rate}/Tag.",
-
   "array.clean": "Gesund",
   "array.degraded": "Beeinträchtigt",
   "array.resyncing": "Synchronisiert",
   "array.recovering": "Wird wiederhergestellt",
   "array.inactive": "Inaktiv",
-
   "storage.bay": "Schacht {n}",
   "storage.sleeping": "Im Ruhezustand",
   "storage.passed": "OK",
@@ -125,7 +112,6 @@
   "storage.members": "Festplatten",
   "storage.capacity": "Belegt / gesamt",
   "storage.compat": "Volumes, die mit der Original-WD-Firmware erstellt wurden, werden so erkannt, wie sie sind: keine Formatierung, keine Migration.",
-
   "smart.temp": "Temperatur",
   "smart.hours": "Alter",
   "smart.years": "Jahre in Betrieb",
@@ -133,7 +119,6 @@
   "smart.pending": "Ausstehende Sektoren",
   "smart.uncorr": "Unlesbare Sektoren",
   "smart.crc": "Kabelfehler",
-
   "risk.title": "Ausfallrisiko (KI)",
   "risk.low": "Niedrig",
   "risk.medium": "Mittel",
@@ -142,7 +127,6 @@
   "risk.because": "Wichtigste Anzeichen:",
   "risk.advice.medium": "Nicht dringend, aber sorg dafür, dass du ein aktuelles Backup hast.",
   "risk.advice.high": "Mach jetzt ein Backup und plane, diese Festplatte zu ersetzen.",
-
   "factor.reallocated": "neu zugewiesene Sektoren",
   "factor.reported_uncorrectable": "gemeldete Lesefehler",
   "factor.command_timeout": "Befehls-Zeitüberschreitungen",
@@ -151,7 +135,6 @@
   "factor.age_years": "Alter",
   "factor.temp_over_45": "hohe Temperatur",
   "factor.smart_failed": "SMART-Selbsttest fehlgeschlagen",
-
   "shares.help": "Ordner, die du von deinen Computern (SMB) und Smartphones aus öffnen kannst.",
   "shares.readOnly": "Schreibgeschützt",
   "shares.sentinel": "Geschützt",
@@ -164,14 +147,12 @@
   "shares.name": "Name",
   "shares.create": "Erstellen",
   "shares.confirmDelete": "Freigabe „{name}“ entfernen? Die Dateien bleiben auf der Festplatte.",
-
   "users.name": "Name",
   "users.role": "Rolle",
   "users.created": "Erstellt",
   "users.new": "Neuer Benutzer",
   "users.create": "Benutzer anlegen",
   "users.confirmDelete": "Benutzer „{name}“ löschen?",
-
   "ai.intro": "Alte Hardware, neue Intelligenz. Manche Funktionen laufen komplett auf dem NAS, andere nutzen ein KI-Modell deiner Wahl. Es wird nichts verschickt, solange du es nicht einschaltest, und jede Anfrage wird unten aufgelistet.",
   "ai.assistant": "Mood, dein Assistent",
   "ai.assistantSub": "Frag in deinen eigenen Worten nach deinem NAS",
@@ -216,7 +197,6 @@
   "ai.ollamaHelp": "Ein Computer in deinem Netzwerk, auf dem Ollama läuft. Nichts verlässt dein Zuhause.",
   "ai.localFeatures": "Auf dem NAS (privat)",
   "ai.remoteFeatures": "Mit dem KI-Anbieter",
-
   "feature.diskrisk": "Vorhersage von Festplattenausfällen",
   "feature.diskrisk.help": "Schätzt anhand der SMART-Daten das Ausfallrisiko jeder Festplatte.",
   "feature.sentinel": "Ransomware-Wächter",
@@ -229,7 +209,6 @@
   "feature.assistant.help": "Stell Fragen und gib Anweisungen in normaler Sprache. Änderungen brauchen immer deine Bestätigung.",
   "feature.explain": "Erklärte Warnungen",
   "feature.explain.help": "Übersetzt technische Warnungen in verständliche Erklärungen (demnächst).",
-
   "security.incident": "Verdächtige Aktivität auf „{share}“",
   "security.incidentDetail": "{n} verdächtige Vorgänge (Wert {score})",
   "security.frozen": "Die Freigabe wurde schreibgeschützt eingefroren. Es kann nichts Neues mehr darauf geschrieben werden.",
@@ -240,7 +219,6 @@
   "security.actor": "Wer",
   "security.action": "Aktion",
   "security.details": "Details",
-
   "system.general": "Allgemein",
   "system.defaultLang": "Standardsprache",
   "system.defaultLangHelp": "Gilt für neue Besucher. Jede Person kann ihre eigene wählen.",
@@ -253,7 +231,6 @@
   "system.safety": "Sicherheit geht vor: Unabhängig von der Einstellung läuft der Lüfter mit 100 %, wenn die CPU 90 °C oder eine Festplatte 55 °C erreicht.",
   "system.about": "Über",
   "system.aboutText": "MoodNAS ist eine Open-Source-Firmware von Mood Robotics, die dem WD My Cloud EX4 ein zweites Leben schenkt: ein modernes, sicheres System mit integrierter künstlicher Intelligenz.",
-
   "account.password": "Passwort ändern",
   "account.current": "Aktuelles Passwort",
   "account.new": "Neues Passwort",
@@ -267,7 +244,6 @@
   "account.totpStep2": "Gib den 6-stelligen Code ein, den die App anzeigt.",
   "account.totpLink": "In Authenticator-App öffnen",
   "account.totpConfirm": "Bestätigen",
-
   "error.network": "Das NAS ist nicht erreichbar. Prüf deine Verbindung.",
   "error.unknown": "Etwas ist schiefgelaufen.",
   "internal": "Interner Fehler. Bitte versuch es noch einmal.",

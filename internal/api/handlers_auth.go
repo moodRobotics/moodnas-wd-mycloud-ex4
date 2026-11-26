@@ -30,6 +30,7 @@ func (s *Server) bootstrap(w http.ResponseWriter, r *http.Request) {
 		"language":      d.Language,
 		"version":       s.Version,
 		"simulator":     s.Sim != nil,
+		"codeOnPanel":   s.PanelSetupCode,
 	})
 }
 

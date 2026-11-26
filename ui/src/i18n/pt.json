@@ -9,7 +9,6 @@
   "common.saved": "Guardado",
   "common.edit": "Editar",
   "common.delete": "Eliminar",
-
   "nav.label": "Menu principal",
   "nav.menu": "Menu",
   "nav.dashboard": "Resumo",
@@ -20,14 +19,11 @@
   "nav.users": "Utilizadores",
   "nav.system": "Sistema",
   "nav.account": "A minha conta",
-
   "role.admin": "Administrador",
   "role.user": "Utilizador",
-
   "time.dh": "{d} d {h} h",
   "time.hm": "{h} h {m} min",
   "time.m": "{m} min",
-
   "sim.banner": "Modo simulador: nenhum hardware real está a ser utilizado",
   "sim.title": "Cenários do simulador",
   "sim.help": "Veja o que o MoodNAS faz quando algo corre mal. Repare nos olhos.",
@@ -37,12 +33,12 @@
   "sim.disk-failing": "Disco a falhar",
   "sim.degraded": "RAID degradado",
   "sim.ransomware": "Ataque de ransomware",
-
   "setup.welcome": "Olá! Sou o seu novo MoodNAS",
   "setup.intro": "O seu WD My Cloud EX4 funciona agora com software aberto, moderno e seguro. Vamos configurá-lo num minuto.",
   "setup.start": "Começar",
   "setup.codeTitle": "Prove que está junto ao NAS",
   "setup.codeHelp": "Olhe para o visor frontal do NAS (ou para o registo do sistema). Mostra um código de configuração de 8 caracteres. Assim, mais ninguém na sua rede o pode reclamar antes de si.",
+  "setup.codeHelpLog": "O código de configuração de 8 caracteres está no registro do MoodNAS, porque o display frontal continua controlado pelo firmware da WD. Por SSH no NAS, execute isto na pasta moodnas-sidecar (o comando de arranque também o mostra):",
   "setup.code": "Código de configuração",
   "setup.adminTitle": "Criar o administrador",
   "setup.hostname": "Nome do NAS",
@@ -52,15 +48,12 @@
   "setup.mismatch": "As senhas não coincidem",
   "setup.finish": "Concluir",
   "setup.footer": "Sem senhas predefinidas. Sem conta na nuvem.",
-
   "login.user": "Utilizador",
   "login.password": "Senha",
   "login.totp": "Código de 6 dígitos da sua app de autenticação",
   "login.submit": "Entrar",
-
   "user.nameRules": "Letras minúsculas, algarismos, - e _. Deve começar por uma letra.",
   "user.passwordRules": "Pelo menos 10 caracteres. Uma frase curta é fácil de lembrar e difícil de adivinhar.",
-
   "mood.state.calm": "Tranquilo",
   "mood.state.focused": "Concentrado",
   "mood.state.sleepy": "A descansar",
@@ -78,15 +71,12 @@
   "mood.arrayDegraded": "O RAID {array} está degradado: um disco deixou de responder. Os seus dados continuam lá, mas sem margem de segurança.",
   "mood.arrayRebuilding": "A reconstruir o RAID {array}: {progress}%.",
   "mood.ransomware": "Atividade semelhante a ransomware em “{share}”. Congelei-a em modo só de leitura para proteger os seus ficheiros.",
-
   "fan.reason.normal": "O ventilador acompanha a temperatura.",
   "fan.reason.rising": "A temperatura está a subir: acelerei o ventilador antes que aqueça.",
   "fan.reason.quiet": "Horas de silêncio: ventilador baixo enquanto as temperaturas forem seguras.",
   "fan.reason.critical": "Temperatura crítica: ventilador forçado a 100%.",
   "fan.reason.manual": "Ventilador em modo manual.",
-
   "panel.caption": "Pré-visualização em direto do visor frontal do NAS",
-
   "dash.moodLabel": "Como me sinto",
   "dash.cpuTemp": "Temperatura da CPU",
   "dash.predicted": "{c} °C previstos em 3 min",
@@ -103,17 +93,14 @@
   "dash.uptime": "Ligado há",
   "dash.network": "Rede",
   "dash.kernel": "Kernel",
-
   "fill.learning": "A aprender a que ritmo guarda dados…",
   "fill.stable": "A utilização está estável: sem risco de ficar cheio.",
   "fill.days": "Cheio dentro de cerca de {days} dias a {rate}/dia.",
-
   "array.clean": "Saudável",
   "array.degraded": "Degradado",
   "array.resyncing": "A sincronizar",
   "array.recovering": "A reconstruir",
   "array.inactive": "Inativo",
-
   "storage.bay": "Baía {n}",
   "storage.sleeping": "Em repouso",
   "storage.passed": "OK",
@@ -125,7 +112,6 @@
   "storage.members": "Discos",
   "storage.capacity": "Usado / total",
   "storage.compat": "Os volumes criados pelo firmware original da WD são reconhecidos tal como estão: sem formatar nem migrar.",
-
   "smart.temp": "Temperatura",
   "smart.hours": "Idade",
   "smart.years": "anos ligado",
@@ -133,7 +119,6 @@
   "smart.pending": "Setores pendentes",
   "smart.uncorr": "Setores ilegíveis",
   "smart.crc": "Erros de cabo",
-
   "risk.title": "Risco de falha (IA)",
   "risk.low": "Baixo",
   "risk.medium": "Médio",
@@ -142,7 +127,6 @@
   "risk.because": "Principais sinais:",
   "risk.advice.medium": "Não é urgente, mas certifique-se de que tem uma cópia de segurança recente.",
   "risk.advice.high": "Faça já uma cópia de segurança e planeie substituir este disco.",
-
   "factor.reallocated": "setores realocados",
   "factor.reported_uncorrectable": "erros de leitura comunicados",
   "factor.command_timeout": "comandos sem resposta a tempo",
@@ -151,7 +135,6 @@
   "factor.age_years": "idade",
   "factor.temp_over_45": "temperatura elevada",
   "factor.smart_failed": "o autodiagnóstico SMART falhou",
-
   "shares.help": "Pastas que pode abrir a partir dos seus computadores (SMB) e telefones.",
   "shares.readOnly": "Só de leitura",
   "shares.sentinel": "Protegida",
@@ -164,14 +147,12 @@
   "shares.name": "Nome",
   "shares.create": "Criar",
   "shares.confirmDelete": "Remover a pasta partilhada “{name}”? Os ficheiros ficam no disco.",
-
   "users.name": "Nome",
   "users.role": "Função",
   "users.created": "Criado",
   "users.new": "Novo utilizador",
   "users.create": "Criar utilizador",
   "users.confirmDelete": "Eliminar o utilizador “{name}”?",
-
   "ai.intro": "Hardware antigo, inteligência nova. Algumas funções são executadas inteiramente no NAS; outras usam o modelo de IA que escolher. Nada é enviado para lado nenhum sem que o ative, e cada pedido fica registado abaixo.",
   "ai.assistant": "Mood, o seu assistente",
   "ai.assistantSub": "Pergunte sobre o seu NAS com as suas próprias palavras",
@@ -216,7 +197,6 @@
   "ai.ollamaHelp": "Um computador da sua rede que execute o Ollama. Nada sai de sua casa.",
   "ai.localFeatures": "No NAS (privado)",
   "ai.remoteFeatures": "Com o fornecedor de IA",
-
   "feature.diskrisk": "Previsão de falhas de disco",
   "feature.diskrisk.help": "Estima o risco de falha de cada disco a partir dos seus dados SMART.",
   "feature.sentinel": "Sentinela anti-ransomware",
@@ -229,7 +209,6 @@
   "feature.assistant.help": "Faça perguntas e dê instruções em linguagem natural. As alterações precisam sempre da sua confirmação.",
   "feature.explain": "Alertas explicados",
   "feature.explain.help": "Transforma alertas técnicos em explicações simples (em breve).",
-
   "security.incident": "Atividade suspeita em “{share}”",
   "security.incidentDetail": "{n} operações suspeitas (pontuação {score})",
   "security.frozen": "A pasta foi congelada em modo só de leitura. Não é possível escrever nada de novo nela.",
@@ -240,7 +219,6 @@
   "security.actor": "Quem",
   "security.action": "Ação",
   "security.details": "Detalhes",
-
   "system.general": "Geral",
   "system.defaultLang": "Idioma predefinido",
   "system.defaultLangHelp": "Usado para novos visitantes. Cada pessoa pode escolher o seu.",
@@ -253,7 +231,6 @@
   "system.safety": "A segurança primeiro: seja qual for a definição, o ventilador vai a 100% se a CPU chegar aos 90 °C ou um disco aos 55 °C.",
   "system.about": "Acerca de",
   "system.aboutText": "O MoodNAS é um firmware de código aberto da Mood Robotics que dá uma segunda vida ao WD My Cloud EX4: um sistema moderno e seguro com inteligência artificial integrada.",
-
   "account.password": "Alterar senha",
   "account.current": "Senha atual",
   "account.new": "Nova senha",
@@ -267,7 +244,6 @@
   "account.totpStep2": "Introduza o código de 6 dígitos que a app mostra.",
   "account.totpLink": "Abrir na app de autenticação",
   "account.totpConfirm": "Confirmar",
-
   "error.network": "Não é possível contactar o NAS. Verifique a sua ligação.",
   "error.unknown": "Algo correu mal.",
   "internal": "Erro interno. Tente novamente.",

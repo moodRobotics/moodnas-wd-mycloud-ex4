@@ -51,7 +51,8 @@
       <button class="primary" onclick={() => (step = 1)}>{t('setup.start')}</button>
     {:else if step === 1}
       <h2>{t('setup.codeTitle')}</h2>
-      <p class="muted">{t('setup.codeHelp')}</p>
+      <p class="muted">{t(app.boot?.codeOnPanel ? 'setup.codeHelp' : 'setup.codeHelpLog')}</p>
+      {#if !app.boot?.codeOnPanel}<pre class="mono small cmd">sh moodnas-sidecar.sh log</pre>{/if}
       <form
         onsubmit={(e) => {
           e.preventDefault();
@@ -123,6 +124,12 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     text-align: center;
+  }
+  .cmd {
+    background: var(--surface-2);
+    border-radius: var(--radius-s);
+    padding: 0.5rem 0.8rem;
+    overflow-x: auto;
   }
   .foot {
     margin-top: 1rem;

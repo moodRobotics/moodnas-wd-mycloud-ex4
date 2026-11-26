@@ -9,7 +9,6 @@
   "common.saved": "保存しました",
   "common.edit": "編集",
   "common.delete": "削除",
-
   "nav.label": "メインメニュー",
   "nav.menu": "メニュー",
   "nav.dashboard": "概要",
@@ -20,14 +19,11 @@
   "nav.users": "ユーザー",
   "nav.system": "システム",
   "nav.account": "マイアカウント",
-
   "role.admin": "管理者",
   "role.user": "ユーザー",
-
   "time.dh": "{d}日 {h}時間",
   "time.hm": "{h}時間 {m}分",
   "time.m": "{m}分",
-
   "sim.banner": "シミュレーターモード：実際のハードウェアには一切触れていません",
   "sim.title": "シミュレーターのシナリオ",
   "sim.help": "トラブルが起きたときに MoodNAS がどう動くか試してみましょう。目に注目してください。",
@@ -37,12 +33,12 @@
   "sim.disk-failing": "ディスク故障の兆候",
   "sim.degraded": "RAID 縮退",
   "sim.ransomware": "ランサムウェア攻撃",
-
   "setup.welcome": "こんにちは！新しい MoodNAS です",
   "setup.intro": "お使いの WD My Cloud EX4 は、オープンでモダンかつ安全なソフトウェアで動くようになりました。1 分ほどで設定しましょう。",
   "setup.start": "始める",
   "setup.codeTitle": "NAS のそばにいることを確認します",
   "setup.codeHelp": "NAS の前面ディスプレイ（またはシステムログ）をご覧ください。8 文字のセットアップコードが表示されています。これにより、ネットワーク上の他の人が先に NAS を乗っ取ることを防ぎます。",
+  "setup.codeHelpLog": "前面ディスプレイは引き続き WD ファームウェアが制御しているため、8 文字のセットアップコードは MoodNAS のログにあります。NAS に SSH で接続し、moodnas-sidecar フォルダーで次を実行してください（起動コマンドでも表示されます）：",
   "setup.code": "セットアップコード",
   "setup.adminTitle": "管理者を作成",
   "setup.hostname": "NAS の名前",
@@ -52,15 +48,12 @@
   "setup.mismatch": "パスワードが一致しません",
   "setup.finish": "完了",
   "setup.footer": "初期パスワードはありません。クラウドアカウントも不要です。",
-
   "login.user": "ユーザー",
   "login.password": "パスワード",
   "login.totp": "認証アプリの 6 桁のコード",
   "login.submit": "ログイン",
-
   "user.nameRules": "小文字の英字、数字、- と _ が使えます。先頭は英字にしてください。",
   "user.passwordRules": "10 文字以上。短い文章にすると覚えやすく、推測されにくくなります。",
-
   "mood.state.calm": "穏やか",
   "mood.state.focused": "集中",
   "mood.state.sleepy": "休憩中",
@@ -78,15 +71,12 @@
   "mood.arrayDegraded": "RAID {array} が縮退しています：ディスクが 1 台外れました。データは残っていますが、安全マージンがありません。",
   "mood.arrayRebuilding": "RAID {array} を再構築中です：{progress}%。",
   "mood.ransomware": "「{share}」でランサムウェアのような動きを検知しました。ファイルを守るため、読み取り専用で凍結しました。",
-
   "fan.reason.normal": "ファンは温度に合わせて動いています。",
   "fan.reason.rising": "温度が上がってきたので、暑くなる前にファンの回転を上げました。",
   "fan.reason.quiet": "静音時間：温度が安全な間はファンを低速にしています。",
   "fan.reason.critical": "危険な温度：ファンを強制的に 100% にしました。",
   "fan.reason.manual": "ファンは手動モードです。",
-
   "panel.caption": "NAS 前面ディスプレイのライブプレビュー",
-
   "dash.moodLabel": "今の気分",
   "dash.cpuTemp": "CPU 温度",
   "dash.predicted": "3 分後の予測 {c} °C",
@@ -103,17 +93,14 @@
   "dash.uptime": "稼働時間",
   "dash.network": "ネットワーク",
   "dash.kernel": "カーネル",
-
   "fill.learning": "データの保存ペースを学習しています…",
   "fill.stable": "使用量は安定しています：いっぱいになる心配はありません。",
   "fill.days": "1 日あたり {rate} のペースで、約 {days} 日でいっぱいになります。",
-
   "array.clean": "正常",
   "array.degraded": "縮退",
   "array.resyncing": "同期中",
   "array.recovering": "再構築中",
   "array.inactive": "非アクティブ",
-
   "storage.bay": "ベイ {n}",
   "storage.sleeping": "スリープ中",
   "storage.passed": "OK",
@@ -125,7 +112,6 @@
   "storage.members": "ディスク",
   "storage.capacity": "使用量 / 合計",
   "storage.compat": "元の WD ファームウェアで作成したボリュームはそのまま認識されます。フォーマットも移行も不要です。",
-
   "smart.temp": "温度",
   "smart.hours": "使用期間",
   "smart.years": "年稼働",
@@ -133,7 +119,6 @@
   "smart.pending": "代替保留中のセクター",
   "smart.uncorr": "読み取り不能なセクター",
   "smart.crc": "ケーブルエラー",
-
   "risk.title": "AI による故障リスク",
   "risk.low": "低",
   "risk.medium": "中",
@@ -142,7 +127,6 @@
   "risk.because": "主な兆候：",
   "risk.advice.medium": "急ぎではありませんが、最近のバックアップがあるか確認してください。",
   "risk.advice.high": "今すぐバックアップを取り、このディスクの交換を計画してください。",
-
   "factor.reallocated": "代替処理済みセクター",
   "factor.reported_uncorrectable": "報告された読み取りエラー",
   "factor.command_timeout": "コマンドのタイムアウト",
@@ -151,7 +135,6 @@
   "factor.age_years": "使用年数",
   "factor.temp_over_45": "高温",
   "factor.smart_failed": "SMART 自己診断の失敗",
-
   "shares.help": "パソコン（SMB）やスマートフォンから開けるフォルダーです。",
   "shares.readOnly": "読み取り専用",
   "shares.sentinel": "保護中",
@@ -164,14 +147,12 @@
   "shares.name": "名前",
   "shares.create": "作成",
   "shares.confirmDelete": "共有フォルダー「{name}」を削除しますか？ファイルはディスクに残ります。",
-
   "users.name": "名前",
   "users.role": "役割",
   "users.created": "作成日",
   "users.new": "新しいユーザー",
   "users.create": "ユーザーを作成",
   "users.confirmDelete": "ユーザー「{name}」を削除しますか？",
-
   "ai.intro": "古いハードウェアに、新しい知性を。NAS 上だけで動く機能もあれば、お選びいただいた AI モデルを使う機能もあります。オンにしない限りどこにも何も送信されず、すべてのリクエストは下に記録されます。",
   "ai.assistant": "アシスタントの Mood",
   "ai.assistantSub": "NAS のことを普段の言葉で聞いてみてください",
@@ -216,7 +197,6 @@
   "ai.ollamaHelp": "ネットワーク内で Ollama を実行しているパソコン。データが家の外に出ることはありません。",
   "ai.localFeatures": "NAS 上（プライベート）",
   "ai.remoteFeatures": "AI プロバイダーを利用",
-
   "feature.diskrisk": "ディスク故障予測",
   "feature.diskrisk.help": "SMART データから各ディスクの故障リスクを推定します。",
   "feature.sentinel": "ランサムウェア監視",
@@ -229,7 +209,6 @@
   "feature.assistant.help": "普段の言葉で質問や指示ができます。変更には必ずあなたの確認が必要です。",
   "feature.explain": "わかりやすいアラート",
   "feature.explain.help": "専門的なアラートをわかりやすい説明に変換します（近日公開）。",
-
   "security.incident": "「{share}」で不審な動きを検知",
   "security.incidentDetail": "不審な操作 {n} 件（スコア {score}）",
   "security.frozen": "この共有フォルダーは読み取り専用で凍結されました。新たに書き込むことはできません。",
@@ -240,7 +219,6 @@
   "security.actor": "実行者",
   "security.action": "操作",
   "security.details": "詳細",
-
   "system.general": "一般",
   "system.defaultLang": "既定の言語",
   "system.defaultLangHelp": "新しい訪問者に使われます。各自で言語を選ぶこともできます。",
@@ -253,7 +231,6 @@
   "system.safety": "安全第一：設定にかかわらず、CPU が 90 °C またはディスクが 55 °C に達するとファンは 100% で回ります。",
   "system.about": "このシステムについて",
   "system.aboutText": "MoodNAS は Mood Robotics によるオープンソースのファームウェアで、WD My Cloud EX4 に第二の人生を与えます。人工知能を搭載した、モダンで安全なシステムです。",
-
   "account.password": "パスワードを変更",
   "account.current": "現在のパスワード",
   "account.new": "新しいパスワード",
@@ -267,7 +244,6 @@
   "account.totpStep2": "アプリに表示された 6 桁のコードを入力してください。",
   "account.totpLink": "認証アプリで開く",
   "account.totpConfirm": "確認",
-
   "error.network": "NAS に接続できません。接続を確認してください。",
   "error.unknown": "問題が発生しました。",
   "internal": "内部エラーです。もう一度お試しください。",
