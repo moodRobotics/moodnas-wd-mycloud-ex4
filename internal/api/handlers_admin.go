@@ -40,6 +40,21 @@ func visibleShares(d state.Data, sess *auth.Session) []state.Share {
 	return out
 }
 
+var historyRanges = map[string]time.Duration{"1h": time.Hour, "6h": 6 * time.Hour, "24h": 24 * time.Hour}
+
+// history: performance metrics for the charts, averaged to <= 240 points.
+func (s *Server) history(w http.ResponseWriter, r *http.Request, sess *auth.Session) {
+	d, ok := historyRanges[r.URL.Query().Get("range")]
+	if !ok {
+		d = time.Hour
+	}
+	now := time.Now()
+	writeJSON(w, http.StatusOK, map[string]any{
+		"from": now.Add(-d).Unix(), "to": now.Unix(),
+		"points": s.Monitor.History.Query(now.Add(-d), now, 240),
+	})
+}
+
 func (s *Server) listShares(w http.ResponseWriter, r *http.Request, sess *auth.Session) {
 	writeJSON(w, http.StatusOK, visibleShares(s.Store.Read(), sess))
 }

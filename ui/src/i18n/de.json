@@ -272,5 +272,21 @@
   "ai.noKey": "Füge in den KI-Einstellungen einen API-Schlüssel hinzu.",
   "ai.invalidEndpoint": "Ungültige Ollama-Adresse.",
   "ai.providerError": "Der KI-Anbieter hat nicht geantwortet: {detail}",
-  "ai.actionExpired": "Diese Aktion ist abgelaufen. Frag bitte noch einmal."
+  "ai.actionExpired": "Diese Aktion ist abgelaufen. Frag bitte noch einmal.",
+  "perf.title": "Leistung",
+  "perf.range": "Zeitraum",
+  "perf.r1h": "1 Std.",
+  "perf.r6h": "6 Std.",
+  "perf.r24h": "24 Std.",
+  "perf.cpu": "CPU-Auslastung",
+  "perf.load": "Durchschnittslast",
+  "perf.mem": "Belegter RAM",
+  "perf.temp": "Temperatur",
+  "perf.cpuTemp": "CPU",
+  "perf.diskTemp": "Heißeste Festplatte",
+  "perf.noData": "Daten werden gesammelt…",
+  "perf.table": "Datentabelle anzeigen",
+  "perf.time": "Uhrzeit",
+  "perf.loadHelp": "Durchschnittslast: Prozesse, die auf den Prozessor warten. Der EX4 hat einen Kern – Werte über 1 bedeuten Überlastung.",
+  "perf.tempMissing": "Auf diesem System ist kein CPU-Temperatursensor verfügbar"
 }

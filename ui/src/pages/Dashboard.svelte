@@ -1,6 +1,7 @@
 <script>
   import MoodEyes from '../lib/MoodEyes.svelte';
   import FrontPanel from '../lib/FrontPanel.svelte';
+  import Performance from '../lib/Performance.svelte';
   import { t, fmtBytes, fmtDuration, fmtNum } from '../lib/i18n.svelte.js';
   import { post } from '../lib/api.js';
   import { app, isAdmin, refreshStatus } from '../lib/session.svelte.js';
@@ -60,6 +61,8 @@
       <div class="small muted">/ {fmtBytes(s.system.memTotal, true)}</div>
     </div>
   </section>
+
+  <Performance />
 
   <section class="grid cols-2">
     <div class="card stack">

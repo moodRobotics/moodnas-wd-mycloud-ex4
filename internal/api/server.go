@@ -92,6 +92,7 @@ func (s *Server) Handler() http.Handler {
 	usr("POST /api/v1/me/totp/disable", s.totpDisable)
 
 	usr("GET /api/v1/status", s.status)
+	usr("GET /api/v1/history", s.history)
 	usr("GET /api/v1/shares", s.listShares)
 	adm("POST /api/v1/shares", s.createShare)
 	adm("PUT /api/v1/shares/{name}", s.updateShare)

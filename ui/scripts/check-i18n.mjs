@@ -50,6 +50,7 @@ const dynamic = {
   'feature.': ['diskrisk', 'sentinel', 'fan', 'forecast', 'assistant', 'explain'],
   'ai.provider.': ['none', 'anthropic', 'ollama'],
   'ai.action.': ['confirmed', 'discarded', 'error'],
+  'perf.r': ['1h', '6h', '24h'],
   'factor.': ['reallocated', 'reported_uncorrectable', 'command_timeout', 'pending', 'offline_uncorrectable', 'age_years', 'temp_over_45', 'smart_failed'],
 };
 for (const [prefix, values] of Object.entries(dynamic)) {

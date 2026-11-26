@@ -26,6 +26,7 @@ import (
 	"time"
 
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/platform"
+	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/platform/kirkwood"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/platform/mcu"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/storage"
 )
@@ -80,6 +81,9 @@ func (l *Linux) Sensors() (platform.Sensors, error) {
 	// Kirkwood die sensor (kirkwood-thermal) and any hwmon (e.g. lm75 at 0x4c).
 	if v, err := readInt("/sys/class/thermal/thermal_zone0/temp"); err == nil {
 		s.CPUTempC = float64(v) / 1000
+	} else if t, ok := kirkwood.Open().Read(); ok {
+		// WD's 3.2 kernel has no thermal driver: read the SoC sensor directly
+		s.CPUTempC = t
 	}
 	hw, _ := filepath.Glob("/sys/class/hwmon/hwmon*/temp1_input")
 	for _, p := range hw {

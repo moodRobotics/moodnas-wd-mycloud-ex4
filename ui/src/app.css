@@ -11,6 +11,9 @@
   --ok: #2fd27a;
   --warn: #ffb020;
   --bad: #ff4d5e;
+  /* chart series, validated against #0d0f14 (dark) and #fff (light) */
+  --series-1: #4c82ff;
+  --series-2: #d95926;
   --radius: 18px;
   --radius-s: 10px;
   --font: ui-rounded, 'SF Pro Rounded', 'Nunito', 'Varela Round', 'Quicksand', system-ui, -apple-system,
@@ -26,6 +29,8 @@
   --line: #dde2ec;
   --text: #0b0d12;
   --muted: #5d667a;
+  --series-1: #1f5fff;
+  --series-2: #eb6834;
   color-scheme: light;
 }
 

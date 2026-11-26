@@ -8,12 +8,14 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"math"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/ai/local"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/audit"
+	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/history"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/mood"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/platform"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/state"
@@ -45,6 +47,7 @@ type Monitor struct {
 	Sentinel  *local.Sentinel
 	Forecast  *local.Forecast
 	Fan       *local.FanController
+	History   *history.Recorder
 
 	mu        sync.RWMutex
 	snap      Snapshot
@@ -156,6 +159,21 @@ func (m *Monitor) tick() {
 	s.Panel = panelFor(cfg, s, code, maxDisk)
 	if err := m.P.ShowPanel(s.Panel); err != nil && !errors.Is(err, platform.ErrNotSupported) {
 		m.Log.Warn("panel", "err", err)
+	}
+
+	if m.History != nil {
+		sm := history.Sample{T: now.Unix(), CPU: s.System.CPUPct, Load: s.System.Load1,
+			CPUTemp: history.Unknown, DiskTemp: history.Unknown}
+		if s.System.MemTotal > 0 {
+			sm.Mem = math.Round(float64(s.System.MemUsed)*1000/float64(s.System.MemTotal)) / 10
+		}
+		if s.Sensors.CPUTempC >= 0 {
+			sm.CPUTemp = s.Sensors.CPUTempC
+		}
+		if maxDisk > 0 {
+			sm.DiskTemp = maxDisk
+		}
+		m.History.Add(sm)
 	}
 
 	m.mu.Lock()

@@ -21,6 +21,7 @@ import (
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/api"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/audit"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/auth"
+	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/history"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/monitor"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/platform"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/platform/sim"
@@ -104,6 +105,7 @@ func run(log *slog.Logger, dataDir, uiDir, listen, httpAddr string, insecure, si
 		Sentinel:  local.NewSentinel(),
 		Forecast:  forecast,
 		Fan:       local.NewFanController(cfg.Fan.QuietStart, cfg.Fan.QuietEnd),
+		History:   history.New(filepath.Join(dataDir, "history.json"), interval),
 	}
 
 	srv := &api.Server{
@@ -120,6 +122,22 @@ func run(log *slog.Logger, dataDir, uiDir, listen, httpAddr string, insecure, si
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 	go mon.Run(ctx)
+	// history is saved hourly (not more: frequent writes keep disks awake) and on exit
+	defer mon.History.Save()
+	go func() {
+		t := time.NewTicker(time.Hour)
+		defer t.Stop()
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-t.C:
+				if err := mon.History.Save(); err != nil {
+					log.Warn("history save", "err", err)
+				}
+			}
+		}
+	}()
 
 	hs := &http.Server{
 		Addr: listen, Handler: srv.Handler(),

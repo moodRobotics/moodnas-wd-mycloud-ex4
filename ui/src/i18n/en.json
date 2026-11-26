@@ -272,5 +272,21 @@
   "ai.noKey": "Add an API key in AI settings.",
   "ai.invalidEndpoint": "Invalid Ollama address.",
   "ai.providerError": "The AI provider did not answer: {detail}",
-  "ai.actionExpired": "This action has expired. Ask again."
+  "ai.actionExpired": "This action has expired. Ask again.",
+  "perf.title": "Performance",
+  "perf.range": "Time range",
+  "perf.r1h": "1 h",
+  "perf.r6h": "6 h",
+  "perf.r24h": "24 h",
+  "perf.cpu": "CPU usage",
+  "perf.load": "Load average",
+  "perf.mem": "RAM used",
+  "perf.temp": "Temperature",
+  "perf.cpuTemp": "CPU",
+  "perf.diskTemp": "Hottest disk",
+  "perf.noData": "Collecting data…",
+  "perf.table": "Show data table",
+  "perf.time": "Time",
+  "perf.loadHelp": "Load average: processes waiting for the processor. The EX4 has one core, so values above 1 mean it is saturated.",
+  "perf.tempMissing": "No CPU temperature sensor available on this system"
 }

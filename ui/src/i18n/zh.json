@@ -272,5 +272,21 @@
   "ai.noKey": "请在 AI 设置中添加 API 密钥。",
   "ai.invalidEndpoint": "Ollama 地址无效。",
   "ai.providerError": "AI 服务商没有响应：{detail}",
-  "ai.actionExpired": "此操作已过期，请重新提出。"
+  "ai.actionExpired": "此操作已过期，请重新提出。",
+  "perf.title": "性能",
+  "perf.range": "时间范围",
+  "perf.r1h": "1 小时",
+  "perf.r6h": "6 小时",
+  "perf.r24h": "24 小时",
+  "perf.cpu": "CPU 使用率",
+  "perf.load": "平均负载",
+  "perf.mem": "已用内存",
+  "perf.temp": "温度",
+  "perf.cpuTemp": "CPU",
+  "perf.diskTemp": "最热的硬盘",
+  "perf.noData": "正在收集数据…",
+  "perf.table": "显示数据表",
+  "perf.time": "时间",
+  "perf.loadHelp": "平均负载：等待处理器的进程数。EX4 只有一个核心，超过 1 即表示已满负荷。",
+  "perf.tempMissing": "此系统上没有可用的 CPU 温度传感器"
 }

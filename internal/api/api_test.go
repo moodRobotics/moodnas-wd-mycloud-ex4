@@ -16,6 +16,7 @@ import (
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/ai/local"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/audit"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/auth"
+	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/history"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/monitor"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/platform/sim"
 	"github.com/moodrobotics/moodnas-wd-mycloud-ex4/internal/state"
@@ -64,7 +65,8 @@ func newTestServer(t *testing.T) (*Server, *httptest.Server) {
 	p := sim.New(log)
 	mon := &monitor.Monitor{P: p, Store: store, Audit: al, Log: log, Interval: time.Hour,
 		DiskModel: local.DefaultDiskModel, Sentinel: local.NewSentinel(),
-		Forecast: local.NewForecast(time.Second, time.Minute), Fan: local.NewFanController(23, 7)}
+		Forecast: local.NewForecast(time.Second, time.Minute), Fan: local.NewFanController(23, 7),
+		History: history.New("", time.Second)}
 	mon.Tick()
 	s := &Server{Store: store, Sessions: auth.NewSessions(), Limiter: auth.NewLimiter(), Audit: al,
 		Monitor: mon, Assistant: assistant.New(), Platform: p, Sim: p, Log: log, UIDir: dir, Version: "test"}
@@ -152,6 +154,16 @@ func TestSetupLoginAndPermissions(t *testing.T) {
 	}
 	if code, b := u.do("GET", "/api/v1/status", nil); code != 200 || b["snapshot"] == nil {
 		t.Fatal("user cannot read status")
+	}
+	s.Monitor.Tick()
+	code, b = u.do("GET", "/api/v1/history?range=6h", nil)
+	pts, _ := b["points"].([]any)
+	if code != 200 || len(pts) != 240 {
+		t.Fatalf("history: %d, %d points", code, len(pts))
+	}
+	last := pts[len(pts)-1].(map[string]any)
+	if last["cpu"] == nil || last["mem"] == nil {
+		t.Fatalf("latest history point empty: %v", last)
 	}
 }
 

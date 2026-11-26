@@ -272,5 +272,21 @@
   "ai.noKey": "Ajoutez une clé API dans les réglages IA.",
   "ai.invalidEndpoint": "Adresse d’Ollama non valide.",
   "ai.providerError": "Le fournisseur d’IA n’a pas répondu : {detail}",
-  "ai.actionExpired": "Cette action a expiré. Redemandez-la."
+  "ai.actionExpired": "Cette action a expiré. Redemandez-la.",
+  "perf.title": "Performances",
+  "perf.range": "Période",
+  "perf.r1h": "1 h",
+  "perf.r6h": "6 h",
+  "perf.r24h": "24 h",
+  "perf.cpu": "Utilisation CPU",
+  "perf.load": "Charge moyenne",
+  "perf.mem": "RAM utilisée",
+  "perf.temp": "Température",
+  "perf.cpuTemp": "CPU",
+  "perf.diskTemp": "Disque le plus chaud",
+  "perf.noData": "Collecte des données…",
+  "perf.table": "Afficher le tableau de données",
+  "perf.time": "Heure",
+  "perf.loadHelp": "Charge moyenne : processus en attente du processeur. L’EX4 n’a qu’un cœur : au-delà de 1, il est saturé.",
+  "perf.tempMissing": "Aucun capteur de température CPU disponible sur ce système"
 }

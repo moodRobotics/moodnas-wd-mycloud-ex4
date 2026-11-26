@@ -272,5 +272,21 @@
   "ai.noKey": "Adicione uma chave de API nas definições de IA.",
   "ai.invalidEndpoint": "Endereço do Ollama inválido.",
   "ai.providerError": "O fornecedor de IA não respondeu: {detail}",
-  "ai.actionExpired": "Esta ação expirou. Peça novamente."
+  "ai.actionExpired": "Esta ação expirou. Peça novamente.",
+  "perf.title": "Desempenho",
+  "perf.range": "Intervalo de tempo",
+  "perf.r1h": "1 h",
+  "perf.r6h": "6 h",
+  "perf.r24h": "24 h",
+  "perf.cpu": "Uso de CPU",
+  "perf.load": "Carga média",
+  "perf.mem": "RAM usada",
+  "perf.temp": "Temperatura",
+  "perf.cpuTemp": "CPU",
+  "perf.diskTemp": "Disco mais quente",
+  "perf.noData": "A recolher dados…",
+  "perf.table": "Ver tabela de dados",
+  "perf.time": "Hora",
+  "perf.loadHelp": "Carga média: processos à espera do processador. O EX4 tem um só núcleo, por isso valores acima de 1 indicam saturação.",
+  "perf.tempMissing": "Não há sensor de temperatura da CPU disponível neste sistema"
 }

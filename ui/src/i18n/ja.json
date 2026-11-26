@@ -272,5 +272,21 @@
   "ai.noKey": "AI 設定で API キーを追加してください。",
   "ai.invalidEndpoint": "Ollama のアドレスが無効です。",
   "ai.providerError": "AI プロバイダーから応答がありませんでした：{detail}",
-  "ai.actionExpired": "この操作は期限切れです。もう一度依頼してください。"
+  "ai.actionExpired": "この操作は期限切れです。もう一度依頼してください。",
+  "perf.title": "パフォーマンス",
+  "perf.range": "期間",
+  "perf.r1h": "1 時間",
+  "perf.r6h": "6 時間",
+  "perf.r24h": "24 時間",
+  "perf.cpu": "CPU 使用率",
+  "perf.load": "平均負荷",
+  "perf.mem": "RAM 使用量",
+  "perf.temp": "温度",
+  "perf.cpuTemp": "CPU",
+  "perf.diskTemp": "最も高温のディスク",
+  "perf.noData": "データを収集しています…",
+  "perf.table": "データ表を表示",
+  "perf.time": "時刻",
+  "perf.loadHelp": "平均負荷：プロセッサーを待っているプロセスの数です。EX4 は 1 コアなので、1 を超えると飽和しています。",
+  "perf.tempMissing": "このシステムでは CPU 温度センサーを利用できません"
 }
