@@ -4,7 +4,7 @@ GO      := ./build/go.sh
 PY      := python3 -I
 FW      ?= My_Cloud_LT4A_2.13.108.bin
 
-.PHONY: all test test-go test-py ui moodd-arm demo i18n firmware-info clean
+.PHONY: all test test-go test-py ui moodd-arm demo i18n firmware-info clean sidecar
 
 all: test ui moodd-arm
 
@@ -36,3 +36,11 @@ firmware-info:
 
 clean:
 	rm -rf dist ui/dist
+
+# MoodNAS "sidecar" for a WD My Cloud EX4 still on WD's firmware: copy
+# dist/moodnas-sidecar/ to a share and run `sh moodnas-sidecar.sh start`.
+sidecar: ui
+	rm -rf dist/moodnas-sidecar && mkdir -p dist/moodnas-sidecar
+	GOOS=linux GOARCH=arm GOARM=5 $(GO) go build -trimpath -ldflags="-s -w" -o dist/moodnas-sidecar/moodd ./cmd/moodd
+	cp -r ui/dist dist/moodnas-sidecar/ui
+	cp tools/sidecar/moodnas-sidecar.sh dist/moodnas-sidecar/

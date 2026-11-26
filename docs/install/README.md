@@ -1,9 +1,8 @@
 # Installing MoodNAS
 
-> **Status: MoodNAS cannot be installed on a real EX4 yet.** The web
-> interface, API and AI run today in the simulator. Booting on the hardware is
-> phase 5 of the [roadmap](../../README.md#roadmap). This page explains the
-> plan and how you can help right now, without any risk to your NAS.
+> **Status:** MoodNAS runs on a real EX4 today as a **sidecar** next to WD's
+> firmware: it observes disks, SMART, RAID and network, with no installation
+> and no flash writes. Replacing WD's firmware is phase 5.
 
 ## Safety principles
 
@@ -37,6 +36,25 @@ This is the most useful thing you can do today. It is read-only.
      contains your MAC addresses and serial number. With a serial console it
      can restore the NAS exactly as it left the factory.
 
+## Run MoodNAS on your EX4 today (sidecar)
+
+1. Build the package on a computer (`make sidecar`) or download it from the
+   releases, and copy the `moodnas-sidecar` folder into the NAS's `Public`
+   share.
+2. Over SSH on the NAS:
+
+   ```sh
+   sh /shares/Public/moodnas-sidecar/moodnas-sidecar.sh start
+   ```
+
+3. Open `https://<nas-ip>:8443`, accept the self-signed certificate, and
+   enter the setup code that the script prints.
+
+`stop`, `status` and `log` work the same way. To remove it, run `stop` and
+delete the folder. In this mode WD's firmware keeps control of the fan, the
+display and the buttons; MoodNAS only reads. It runs at the lowest priority
+and reads SMART at most every 10 minutes, so it is safe during a RAID rebuild.
+
 ## Phase 5 boot plan (in development)
 
 ```
@@ -46,8 +64,9 @@ power on → U-Boot → WD kernel 3.2 + ramdisk (unchanged, from NAND)
          → MoodNAS runs; a power cycle returns to WD firmware
 ```
 
-If the factory kernel has no kexec support (Stage 0 tells us), we build a
-kexec module for 3.2.40 from WD's own GPL sources.
+Stage 0 confirmed that WD's kernel has **no kexec support**, so the next
+step is a kexec loadable module for 3.2.40 built from WD's own GPL sources
+(same compiler and configuration, so the module loads on the stock kernel).
 
 ## Try it now: simulator
 

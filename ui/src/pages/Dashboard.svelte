@@ -41,7 +41,7 @@
   <section class="grid cols-4 stats">
     <div class="card">
       <div class="muted small">{t('dash.cpuTemp')}</div>
-      <div class="big">{fmtNum(s.sensors.cpuTempC)}<small>°C</small></div>
+      <div class="big">{s.sensors.cpuTempC >= 0 ? fmtNum(s.sensors.cpuTempC) : '–'}<small>°C</small></div>
       {#if s.fan.trendPerMin > 0.2}<div class="small warn-t">↗ {t('dash.predicted', { c: s.fan.predictedCpuC })}</div>{/if}
     </div>
     <div class="card">

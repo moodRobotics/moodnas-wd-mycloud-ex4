@@ -117,3 +117,19 @@ func TestFanController(t *testing.T) {
 		t.Fatalf("critical decision %+v", c)
 	}
 }
+
+// SMART values read from a real EX4 (Stage 0, 2026-11-25): four ~7-year-old
+// WD20EFRX, the one in bay 3 with 125 reallocated sectors while its RAID
+// rebuilt. The model must single it out.
+func TestDiskRiskRealEX4(t *testing.T) {
+	healthy := platform.Disk{Device: "sda", Bay: 1, SMART: &platform.SMART{Healthy: true, TempC: 39, PowerOnHours: 60990}}
+	bay3 := platform.Disk{Device: "sdc", Bay: 3, SMART: &platform.SMART{Healthy: true, TempC: 42, PowerOnHours: 59796, Reallocated: 125}}
+	h, r := DefaultDiskModel.Score(healthy), DefaultDiskModel.Score(bay3)
+	if h.Level != "low" {
+		t.Fatalf("healthy old disk scored %+v", h)
+	}
+	if r.Level != "medium" || r.Factors[0].Name != "reallocated" {
+		t.Fatalf("bay 3 scored %+v", r)
+	}
+	t.Logf("healthy %.1f%%, bay 3 %.1f%%", h.Probability*100, r.Probability*100)
+}

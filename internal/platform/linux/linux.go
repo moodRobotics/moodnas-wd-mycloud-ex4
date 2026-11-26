@@ -12,8 +12,11 @@ package linux
 import (
 	"bufio"
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
+	"math"
+	"net"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -36,7 +39,20 @@ type Linux struct {
 	sharesRoot string
 	mcu        *mcu.Client
 	fanLevel   int
+
+	smartJSON  int // 0 unknown, 1 smartctl has --json, -1 text only (smartctl < 7)
+	smartCache map[string]cachedSMART
+	cpuPrev    [2]uint64 // busy, total jiffies
 }
+
+type cachedSMART struct {
+	disk platform.Disk
+	at   time.Time
+}
+
+// SMART is read at most every smartEvery: querying it too often keeps
+// disks from spinning down.
+const smartEvery = 10 * time.Minute
 
 // AttachMCU enables the experimental front-panel MCU driver.
 func (l *Linux) AttachMCU(c *mcu.Client) {
@@ -60,7 +76,7 @@ func readInt(path string) (int, error) {
 }
 
 func (l *Linux) Sensors() (platform.Sensors, error) {
-	var s platform.Sensors
+	s := platform.Sensors{CPUTempC: -1} // -1 = unknown (WD's 3.2 kernel has no thermal zone)
 	// Kirkwood die sensor (kirkwood-thermal) and any hwmon (e.g. lm75 at 0x4c).
 	if v, err := readInt("/sys/class/thermal/thermal_zone0/temp"); err == nil {
 		s.CPUTempC = float64(v) / 1000
@@ -138,37 +154,83 @@ func (l *Linux) Disks() ([]platform.Disk, error) {
 		}
 		link, _ := os.Readlink("/sys/block/" + name)
 		d.Bay = bayFromPath(link)
-		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
-		// -n standby: never wake a sleeping disk just to read SMART.
-		b, err := exec.CommandContext(ctx, "smartctl", "--json", "-a", "-n", "standby", "/dev/"+name).Output()
-		cancel()
-		if len(b) > 0 {
-			if sd, perr := storage.ParseSmartctl(b); perr == nil && sd.SMART != nil && sd.Model != "" {
-				sd.Device, sd.Bay = name, d.Bay
-				if sd.SizeBytes == 0 {
-					sd.SizeBytes = d.SizeBytes
-				}
-				d = sd
-			} else if err != nil {
-				d.Sleeping = true
+		if sd, ok := l.smart(name); ok {
+			sd.Device, sd.Bay = name, d.Bay
+			if sd.SizeBytes == 0 {
+				sd.SizeBytes = d.SizeBytes
 			}
+			d = sd
 		}
 		out = append(out, d)
 	}
 	return out, nil
 }
 
-// bayFromPath maps a /sys/block link to a front bay. The exact mapping of
-// ata ports to bays is confirmed by tools/stage0 on real hardware; until
-// then we fall back to device order.
+// bayFromPath maps a /sys/block link to a front bay. On the EX4 all four
+// bays hang off the PCIe Marvell 88SX7042 (sata_mv): SCSI hosts 0-3 are bays
+// 1-4 (Stage 0 report: ata1..4 -> sda..sdd -> host0..3). Mainline kernels
+// show ataN in the path instead.
 func bayFromPath(link string) int {
-	for i, key := range []string{"ata1/", "ata2/", "ata3/", "ata4/"} {
-		if strings.Contains(link, key) {
+	if strings.Contains(link, "/usb") {
+		return 0
+	}
+	for i := 0; i < 4; i++ {
+		if strings.Contains(link, fmt.Sprintf("/host%d/", i)) || strings.Contains(link, fmt.Sprintf("/ata%d/", i+1)) {
 			return i + 1
 		}
 	}
 	return 0
 }
+
+// smart returns SMART data for a disk, cached for smartEvery. It uses
+// `smartctl --json` when available and falls back to the text output of old
+// versions such as the 5.38 shipped with WD's firmware.
+func (l *Linux) smart(name string) (platform.Disk, bool) {
+	l.mu.Lock()
+	if l.smartCache == nil {
+		l.smartCache = map[string]cachedSMART{}
+	}
+	c, cached := l.smartCache[name]
+	mode := l.smartJSON
+	l.mu.Unlock()
+	if cached && time.Since(c.at) < smartEvery {
+		return c.disk, c.disk.SMART != nil
+	}
+	run := func(args ...string) []byte {
+		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+		defer cancel()
+		// -n standby: never wake a sleeping disk just to read SMART.
+		out, _ := exec.CommandContext(ctx, "smartctl", append(args, "-n", "standby", "/dev/"+name)...).Output()
+		return out
+	}
+	var d platform.Disk
+	var err error = errNoSMART
+	if mode >= 0 {
+		out := run("--json", "-a")
+		if d, err = storage.ParseSmartctl(out); err == nil && d.Model != "" {
+			mode = 1
+		} else {
+			err = errNoSMART
+			if mode == 0 && !strings.HasPrefix(strings.TrimSpace(string(out)), "{") {
+				mode = -1 // no JSON support: remember it
+			}
+		}
+	}
+	if mode < 0 {
+		d, err = storage.ParseSmartctlText(string(run("-i", "-H", "-A")))
+	}
+	if err != nil { // sleeping (smartctl exits early) or unreadable: keep the last data
+		d = c.disk
+		d.Sleeping = true
+	}
+	l.mu.Lock()
+	l.smartJSON = mode
+	l.smartCache[name] = cachedSMART{disk: d, at: time.Now()}
+	l.mu.Unlock()
+	return d, d.SMART != nil
+}
+
+var errNoSMART = errors.New("no SMART data")
 
 func (l *Linux) Arrays() ([]platform.Array, error) {
 	b, err := os.ReadFile("/proc/mdstat")
@@ -219,18 +281,21 @@ func (l *Linux) System() (platform.System, error) {
 		fmt.Sscanf(string(b), "%f", &s.Load1)
 	}
 	if b, err := os.ReadFile("/proc/meminfo"); err == nil {
-		var total, avail uint64
+		m := map[string]uint64{}
 		for _, line := range strings.Split(string(b), "\n") {
-			var v uint64
-			if n, _ := fmt.Sscanf(line, "MemTotal: %d kB", &v); n == 1 {
-				total = v << 10
-			}
-			if n, _ := fmt.Sscanf(line, "MemAvailable: %d kB", &v); n == 1 {
-				avail = v << 10
+			f := strings.Fields(line)
+			if len(f) >= 2 {
+				v, _ := strconv.ParseUint(f[1], 10, 64)
+				m[strings.TrimSuffix(f[0], ":")] = v << 10
 			}
 		}
-		s.MemTotal, s.MemUsed = total, total-avail
+		avail, ok := m["MemAvailable"]
+		if !ok { // kernels before 3.14, such as WD's 3.2
+			avail = m["MemFree"] + m["Buffers"] + m["Cached"]
+		}
+		s.MemTotal, s.MemUsed = m["MemTotal"], m["MemTotal"]-min(avail, m["MemTotal"])
 	}
+	s.CPUPct = l.cpuPct()
 	ifs, _ := os.ReadDir("/sys/class/net")
 	for _, e := range ifs {
 		n := e.Name()
@@ -239,9 +304,44 @@ func (l *Linux) System() (platform.System, error) {
 		}
 		state, _ := os.ReadFile("/sys/class/net/" + n + "/operstate")
 		speed, _ := readInt("/sys/class/net/" + n + "/speed")
-		s.Net = append(s.Net, platform.NetIf{Name: n, Up: strings.TrimSpace(string(state)) == "up", Speed: speed})
+		ni := platform.NetIf{Name: n, Up: strings.TrimSpace(string(state)) == "up", Speed: max(speed, 0)}
+		if ifc, err := net.InterfaceByName(n); err == nil {
+			addrs, _ := ifc.Addrs()
+			for _, a := range addrs {
+				if ipn, ok := a.(*net.IPNet); ok && ipn.IP.To4() != nil {
+					ni.Address = ipn.IP.String()
+					break
+				}
+			}
+		}
+		s.Net = append(s.Net, ni)
 	}
 	return s, nil
+}
+
+// cpuPct is the CPU usage since the previous call, from /proc/stat.
+func (l *Linux) cpuPct() float64 {
+	b, err := os.ReadFile("/proc/stat")
+	if err != nil {
+		return 0
+	}
+	f := strings.Fields(strings.SplitN(string(b), "\n", 2)[0])
+	var total, idle uint64
+	for i, v := range f[1:] {
+		n, _ := strconv.ParseUint(v, 10, 64)
+		total += n
+		if i == 3 || i == 4 { // idle, iowait
+			idle += n
+		}
+	}
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	prev := l.cpuPrev
+	l.cpuPrev = [2]uint64{total - idle, total}
+	if prev[1] == 0 || total <= prev[1] {
+		return 0
+	}
+	return math.Round(float64((total-idle)-prev[0])*1000/float64(total-prev[1])) / 10
 }
 
 func (l *Linux) FileEvents() <-chan platform.FileEvent { return l.files }

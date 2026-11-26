@@ -10,10 +10,11 @@
  *
  * Hardware summary:
  *   SoC   Marvell 88F6282 (Kirkwood, Feroceon ARMv5TE)
- *   RAM   512 MiB DDR3 (TODO confirm)
- *   NAND  on-chip controller; partition layout from U-Boot mtdparts (TODO)
- *   SATA  2 ports on-chip (sata_mv) + PCIe Marvell 88SE91xx (ahci) for bays 3-4
- *   USB   on-chip EHCI + Etron EJ168 xHCI on PCIe
+ *   RAM   512 MiB (confirmed by Stage 0)
+ *   NAND  Samsung 256 MiB, 128 KiB blocks (confirmed; layout below)
+ *   SATA  all 4 bays on a PCIe Marvell 88SX7042 (sata_mv PCI driver,
+ *         confirmed); the SoC's own SATA ports are unused
+ *   USB   on-chip EHCI + Etron EJ168 xHCI (1b6f:7023) on PCIe port 1
  *   NET   2x GbE RGMII, PHYs at SMI addresses 0 and 1
  *   UART0 console 115200 8N1; UART1 front-panel MCU (19200 8N1, see
  *         docs/hardware/mcu-protocol.md). Fan, OLED, buttons and RTC live
@@ -62,9 +63,9 @@
 			clock-frequency = <100000>;
 		};
 
+		/* bays are on the PCIe 88SX7042, not on the SoC's SATA ports */
 		sata@80000 {
-			status = "okay";
-			nr-ports = <2>;
+			status = "disabled";
 		};
 	};
 
@@ -132,11 +133,16 @@
 		#address-cells = <1>;
 		#size-cells = <1>;
 		/*
-		 * TODO: copy the real layout from /proc/mtd (Stage 0). Known roles:
-		 * mtd0 u-boot, mtd1 uImage, mtd2 uRamdisk, mtd3 image.cfs,
-		 * mtd4 rescue firmware + MAC/serial, mtd5 config (UBI).
-		 * Until confirmed every partition must stay read-only.
+		 * Layout confirmed on a real unit (Stage 0). Everything read-only
+		 * until a serial-console recovery path exists.
 		 */
+		partition@0 { label = "u-boot"; reg = <0x0000000 0x0100000>; read-only; };
+		partition@100000 { label = "uImage"; reg = <0x0100000 0x0500000>; read-only; };
+		partition@600000 { label = "ramdisk"; reg = <0x0600000 0x0500000>; read-only; };
+		partition@b00000 { label = "image"; reg = <0x0b00000 0xcd00000>; read-only; };
+		partition@d800000 { label = "reserve"; reg = <0xd800000 0x0500000>; read-only; };
+		partition@dd00000 { label = "rescue"; reg = <0xdd00000 0x0f00000>; read-only; };
+		partition@ec00000 { label = "config"; reg = <0xec00000 0x1400000>; read-only; };
 	};
 };
 

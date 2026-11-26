@@ -50,7 +50,7 @@ run 'dmesg'
 # --- kexec support (decides how MoodNAS can boot without touching the flash)
 run 'ls -l /proc/config.gz; zcat /proc/config.gz 2>/dev/null | grep -E "KEXEC|ATAGS|DTB|CMDLINE"'
 run 'grep -i kexec /proc/kallsyms | head -5'
-run 'which kexec; ls /sbin/kexec /usr/sbin/kexec 2>/dev/null'
+run 'command -v kexec; ls /sbin/kexec /usr/sbin/kexec 2>/dev/null'
 
 # --- buses and devices
 run 'cat /proc/bus/pci/devices; lspci -nn 2>/dev/null'
@@ -70,7 +70,8 @@ done
 
 # --- U-Boot environment (read-only)
 run 'fw_printenv 2>/dev/null || /usr/local/sbin/fw_printenv 2>/dev/null'
-run 'dd if=/dev/mtd0 bs=1024 count=1024 2>/dev/null | strings | grep -E "^(bootcmd|bootargs|mtdparts|ethaddr|eth1addr|bootdelay|baudrate|console|U-Boot)" | sort -u'
+# WD's busybox has no `strings`: turn non-printable bytes into newlines instead
+run 'dd if=/dev/mtd0 bs=1024 count=1024 2>/dev/null | tr -c "[:print:]" "\n" | grep -E "^(bootcmd|bootargs|mtdparts|bootdelay|U-Boot)" | sort -u'
 
 # --- MCU protocol confirmation: passive observation only
 if command -v strace >/dev/null 2>&1; then
@@ -97,7 +98,11 @@ for m in /dev/mtd[0-9]; do
 	[ -c "$m" ] || continue
 	name=$(basename "$m")
 	if dd if="$m" of="$DEST/mtd/$name.img" bs=64k 2>/dev/null; then
-		echo "$name: $(wc -c <"$DEST/mtd/$name.img") bytes, sha256 $(sha256sum "$DEST/mtd/$name.img" | cut -d' ' -f1)" >>"$REPORT"
+		# WD's busybox has md5sum but no sha256sum
+		sum=$( (sha256sum "$DEST/mtd/$name.img" 2>/dev/null || md5sum "$DEST/mtd/$name.img") | cut -d' ' -f1)
+		echo "$name: $(wc -c <"$DEST/mtd/$name.img") bytes, $sum" >>"$REPORT"
+	else
+		echo "$name: read failed" >>"$REPORT"
 	fi
 done
 
